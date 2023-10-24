@@ -1,0 +1,292 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>icons/camera-viewfinder copy.svg</file>
+    <file>icons/camera-viewfinder.svg</file>
+    <file>icons/eye copy.svg</file>
+    <file>icons/pause copy.svg</file>
+    <file>icons/add.svg</file>
+    <file>icons/arrow-up-right-and-arrow-down-left-from-center copy.svg</file>
+    <file>icons/arrow-up-right-and-arrow-down-left-from-center.svg</file>
+    <file>icons/arrow-up-right-from-square.svg</file>
+    <file>icons/brightness.png</file>
+    <file>icons/brightness.svg</file>
+    <file>icons/broom.png</file>
+    <file>icons/broom.svg</file>
+    <file>icons/clean.png</file>
+    <file>icons/cross-circle.svg</file>
+    <file>icons/diskette.png</file>
+    <file>icons/disketteF.png</file>
+    <file>icons/down copy.svg</file>
+    <file>icons/down.svg</file>
+    <file>icons/export.png</file>
+    <file>icons/exportF.png</file>
+    <file>icons/eye.svg</file>
+    <file>icons/eye-crossed copy.svg</file>
+    <file>icons/eye-crossed.svg</file>
+    <file>icons/fast-backward.png</file>
+    <file>icons/file-export.svg</file>
+    <file>icons/home.png</file>
+    <file>icons/homeF.png</file>
+    <file>icons/magnifying-glass.png</file>
+    <file>icons/moon copy.svg</file>
+    <file>icons/moon.svg</file>
+    <file>icons/new-document.png</file>
+    <file>icons/new-documentF.png</file>
+    <file>icons/night-mode (1).png</file>
+    <file>icons/night-mode.png</file>
+    <file>icons/open-folder.png</file>
+    <file>icons/open-folderF.png</file>
+    <file>icons/pause.png</file>
+    <file>icons/pause.svg</file>
+    <file>icons/play copy.svg</file>
+    <file>icons/play.png</file>
+    <file>icons/play.svg</file>
+    <file>icons/play-button.png</file>
+    <file>icons/reloading (1).png</file>
+    <file>icons/reloading.png</file>
+    <file>icons/rewind (1).png</file>
+    <file>icons/rewind copy.svg</file>
+    <file>icons/rewind.png</file>
+    <file>icons/rewind.svg</file>
+    <file>icons/rewind-button.png</file>
+    <file>icons/stop.png</file>
+    <file>icons/stop-button copy.svg</file>
+    <file>icons/stop-button.png</file>
+    <file>icons/sun.png</file>
+    <file>icons/trash.svg</file>
+    <file>icons/up copy.svg</file>
+    <file>icons/up.svg</file>
+    <file>icons/video-pause-button.png</file>
+    <file>icons/zoom_in.svg</file>
+    <file>icons/zoom_out.svg</file>
+    <file>icons/zoom-in (1).png</file>
+    <file>icons/add.svg</file>
+    <file>icons/arrow-up-right-and-arrow-down-left-from-center copy.svg</file>
+    <file>icons/arrow-up-right-and-arrow-down-left-from-center.svg</file>
+    <file>icons/arrow-up-right-from-square.svg</file>
+    <file>icons/brightness.png</file>
+    <file>icons/brightness.svg</file>
+    <file>icons/broom.png</file>
+    <file>icons/broom.svg</file>
+    <file>icons/clean.png</file>
+    <file>icons/cross-circle.svg</file>
+    <file>icons/diskette.png</file>
+    <file>icons/disketteF.png</file>
+    <file>icons/down copy.svg</file>
+    <file>icons/down.svg</file>
+    <file>icons/export.png</file>
+    <file>icons/exportF.png</file>
+    <file>icons/eye.svg</file>
+    <file>icons/eye-crossed copy.svg</file>
+    <file>icons/eye-crossed.svg</file>
+    <file>icons/fast-backward.png</file>
+    <file>icons/file-export.svg</file>
+    <file>icons/home.png</file>
+    <file>icons/homeF.png</file>
+    <file>icons/magnifying-glass.png</file>
+    <file>icons/arrow-up-right-from-square.svg</file>
+    <file>icons/add.svg</file>
+    <file>icons/arrow-up-right-and-arrow-down-left-from-center copy.svg</file>
+    <file>icons/arrow-up-right-and-arrow-down-left-from-center.svg</file>
+    <file>icons/arrow-up-right-from-square.svg</file>
+    <file>icons/brightness.png</file>
+    <file>icons/brightness.svg</file>
+    <file>icons/broom.png</file>
+    <file>icons/broom.svg</file>
+    <file>icons/clean.png</file>
+    <file>icons/cross-circle.svg</file>
+    <file>icons/diskette.png</file>
+    <file>icons/disketteF.png</file>
+    <file>icons/down copy.svg</file>
+    <file>icons/down.svg</file>
+    <file>icons/export.png</file>
+    <file>icons/exportF.png</file>
+    <file>icons/eye copy.svg</file>
+    <file>icons/eye.svg</file>
+    <file>icons/eye-crossed copy.svg</file>
+    <file>icons/eye-crossed.svg</file>
+    <file>icons/fast-backward.png</file>
+    <file>icons/file-export.svg</file>
+    <file>icons/home.png</file>
+    <file>icons/homeF.png</file>
+    <file>icons/magnifying-glass.png</file>
+    <file>icons/moon copy.svg</file>
+    <file>icons/moon.svg</file>
+    <file>icons/new-document.png</file>
+    <file>icons/new-documentF.png</file>
+    <file>icons/night-mode (1).png</file>
+    <file>icons/night-mode.png</file>
+    <file>icons/open-folder.png</file>
+    <file>icons/open-folderF.png</file>
+    <file>icons/pause copy.svg</file>
+    <file>icons/pause.png</file>
+    <file>icons/pause.svg</file>
+    <file>icons/play copy.svg</file>
+    <file>icons/play.png</file>
+    <file>icons/play.svg</file>
+    <file>icons/play-button.png</file>
+    <file>icons/reloading (1).png</file>
+    <file>icons/reloading.png</file>
+    <file>icons/rewind (1).png</file>
+    <file>icons/rewind copy.svg</file>
+    <file>icons/rewind.png</file>
+    <file>icons/rewind.svg</file>
+    <file>icons/rewind-button.png</file>
+    <file>icons/stop.png</file>
+    <file>icons/stop-button copy.svg</file>
+    <file>icons/stop-button.png</file>
+    <file>icons/sun.png</file>
+    <file>icons/trash copysvg.svg</file>
+    <file>icons/trash.svg</file>
+    <file>icons/up copy.svg</file>
+    <file>icons/up.svg</file>
+    <file>icons/video-pause-button.png</file>
+    <file>icons/zoom_in.svg</file>
+    <file>icons/zoom_out.svg</file>
+    <file>icons/zoom-in (1).png</file>
+    <file>icons/moon copy.svg</file>
+    <file>icons/moon.svg</file>
+    <file>icons/new-document.png</file>
+    <file>icons/new-documentF.png</file>
+    <file>icons/night-mode (1).png</file>
+    <file>icons/night-mode.png</file>
+    <file>icons/open-folder.png</file>
+    <file>icons/open-folderF.png</file>
+    <file>icons/pause.png</file>
+    <file>icons/pause.svg</file>
+    <file>icons/play copy.svg</file>
+    <file>icons/play.png</file>
+    <file>icons/play.svg</file>
+    <file>icons/play-button.png</file>
+    <file>icons/reloading (1).png</file>
+    <file>icons/reloading.png</file>
+    <file>icons/rewind (1).png</file>
+    <file>icons/rewind copy.svg</file>
+    <file>icons/rewind.png</file>
+    <file>icons/rewind.svg</file>
+    <file>icons/rewind-button.png</file>
+    <file>icons/stop.png</file>
+    <file>icons/stop-button copy.svg</file>
+    <file>icons/stop-button.png</file>
+    <file>icons/sun.png</file>
+    <file>icons/trash.svg</file>
+    <file>icons/up copy.svg</file>
+    <file>icons/up.svg</file>
+    <file>icons/video-pause-button.png</file>
+    <file>icons/zoom-in (1).png</file>
+    <file>icons/down.svg</file>
+    <file>icons/up.svg</file>
+    <file>icons/rewind.svg</file>
+    <file>icons/add.svg</file>
+    <file>icons/arrow-up-right-and-arrow-down-left-from-center.svg</file>
+    <file>icons/arrow-up-right-from-square.svg</file>
+    <file>icons/brightness.png</file>
+    <file>icons/brightness.svg</file>
+    <file>icons/broom.png</file>
+    <file>icons/broom.svg</file>
+    <file>icons/clean.png</file>
+    <file>icons/cross-circle.svg</file>
+    <file>icons/diskette.png</file>
+    <file>icons/disketteF.png</file>
+    <file>icons/export.png</file>
+    <file>icons/exportF.png</file>
+    <file>icons/eye.svg</file>
+    <file>icons/eye-crossed.svg</file>
+    <file>icons/fast-backward.png</file>
+    <file>icons/file-export.svg</file>
+    <file>icons/home.png</file>
+    <file>icons/homeF.png</file>
+    <file>icons/magnifying-glass.png</file>
+    <file>icons/moon.svg</file>
+    <file>icons/new-document.png</file>
+    <file>icons/new-documentF.png</file>
+    <file>icons/night-mode (1).png</file>
+    <file>icons/night-mode.png</file>
+    <file>icons/open-folder.png</file>
+    <file>icons/open-folderF.png</file>
+    <file>icons/pause.png</file>
+    <file>icons/pause.svg</file>
+    <file>icons/play.png</file>
+    <file>icons/play.svg</file>
+    <file>icons/play-button.png</file>
+    <file>icons/reloading (1).png</file>
+    <file>icons/reloading.png</file>
+    <file>icons/rewind (1).png</file>
+    <file>icons/rewind.png</file>
+    <file>icons/rewind-button.png</file>
+    <file>icons/stop.png</file>
+    <file>icons/stop-button.png</file>
+    <file>icons/sun.png</file>
+    <file>icons/trash.svg</file>
+    <file>icons/video-pause-button.png</file>
+    <file>icons/zoom-in (1).png</file>
+    <file>icons/brightness.png</file>
+    <file>icons/broom.png</file>
+    <file>icons/clean.png</file>
+    <file>icons/diskette.png</file>
+    <file>icons/disketteF.png</file>
+    <file>icons/export.png</file>
+    <file>icons/exportF.png</file>
+    <file>icons/fast-backward.png</file>
+    <file>icons/home.png</file>
+    <file>icons/homeF.png</file>
+    <file>icons/magnifying-glass.png</file>
+    <file>icons/new-document.png</file>
+    <file>icons/new-documentF.png</file>
+    <file>icons/night-mode (1).png</file>
+    <file>icons/night-mode.png</file>
+    <file>icons/open-folder.png</file>
+    <file>icons/open-folderF.png</file>
+    <file>icons/pause.png</file>
+    <file>icons/play.png</file>
+    <file>icons/play-button.png</file>
+    <file>icons/reloading (1).png</file>
+    <file>icons/reloading.png</file>
+    <file>icons/rewind (1).png</file>
+    <file>icons/rewind.png</file>
+    <file>icons/rewind-button.png</file>
+    <file>icons/stop.png</file>
+    <file>icons/stop-button.png</file>
+    <file>icons/sun.png</file>
+    <file>icons/video-pause-button.png</file>
+    <file>icons/zoom-in (1).png</file>
+    <file>icons/rewind.png</file>
+    <file>icons/rewind-button.png</file>
+    <file>icons/stop.png</file>
+    <file>icons/stop-button.png</file>
+    <file>icons/brightness.png</file>
+    <file>icons/broom.png</file>
+    <file>icons/clean.png</file>
+    <file>icons/diskette.png</file>
+    <file>icons/disketteF.png</file>
+    <file>icons/export.png</file>
+    <file>icons/exportF.png</file>
+    <file>icons/home.png</file>
+    <file>icons/homeF.png</file>
+    <file>icons/magnifying-glass.png</file>
+    <file>icons/new-document.png</file>
+    <file>icons/new-documentF.png</file>
+    <file>icons/night-mode (1).png</file>
+    <file>icons/night-mode.png</file>
+    <file>icons/open-folder.png</file>
+    <file>icons/open-folderF.png</file>
+    <file>icons/pause.png</file>
+    <file>icons/play.png</file>
+    <file>icons/play-button.png</file>
+    <file>icons/reloading (1).png</file>
+    <file>icons/reloading.png</file>
+    <file>icons/sun.png</file>
+    <file>icons/video-pause-button.png</file>
+    <file>icons/zoom-in (1).png</file>
+    <file>icons/diskette.png</file>
+    <file>icons/export.png</file>
+    <file>icons/home.png</file>
+    <file>icons/new-document.png</file>
+    <file>icons/disketteF.png</file>
+    <file>icons/exportF.png</file>
+    <file>icons/homeF.png</file>
+    <file>icons/new-documentF.png</file>
+    <file>icons/open-folderF.png</file>
+    <file>icons/open-folder.png</file>
+  </qresource>
+</RCC>
