@@ -55,13 +55,7 @@ class MainApp(QMainWindow, ui):
                 button.setStyleSheet("QPushButton{background-color: rgba(255,255,255,0); border:1px solid rgba(255,255,255,0);} QPushButton:pressed{margin-top:2px }")
                 self.table_of_signals.setCellWidget(row, col, button)
                 button.clicked.connect(lambda _, row=row: self.delete_row(row))
-            else:
-                double_validator = QDoubleValidator()
-                double_validator.setNotation(QDoubleValidator.StandardNotation)
-                item = QTableWidgetItem()
-                item.setTextAlignment(Qt.AlignCenter)  # Center-align the text
-                item.setFlags(item.flags() | Qt.ItemIsEditable)
-                item.setValidator(double_validator)
+
 
     def delete_row(self, row):
         if row >= 0 and row < self.table_of_signals.rowCount():
