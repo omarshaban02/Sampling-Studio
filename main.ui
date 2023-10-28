@@ -285,7 +285,7 @@ QPushButton:pressed {
         <number>0</number>
        </property>
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="open_btn">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
            <horstretch>0</horstretch>
@@ -373,6 +373,7 @@ QPushButton:pressed {
              <font>
               <family>Ubuntu</family>
               <pointsize>-1</pointsize>
+              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -471,7 +472,7 @@ QPushButton:pressed {
                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;click on a signal to activat&lt;/p&gt;&lt;p&gt;douple click for deactivate all signals&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">border: 1px solid #ccc;</string>
+                <string notr="true"/>
                </property>
               </widget>
              </item>
@@ -535,6 +536,9 @@ QPushButton:pressed {
                  </property>
                  <item>
                   <widget class="QRadioButton" name="actual_radioButton">
+                   <property name="cursor">
+                    <cursorShape>PointingHandCursor</cursorShape>
+                   </property>
                    <property name="text">
                     <string>Actual</string>
                    </property>
@@ -545,6 +549,9 @@ QPushButton:pressed {
                  </item>
                  <item>
                   <widget class="QRadioButton" name="normalized_radioButton">
+                   <property name="cursor">
+                    <cursorShape>PointingHandCursor</cursorShape>
+                   </property>
                    <property name="text">
                     <string>Normalized</string>
                    </property>
@@ -598,6 +605,18 @@ QPushButton:pressed {
                  </item>
                  <item>
                   <widget class="QLabel" name="frequency_value_label">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>50</width>
+                     <height>0</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>0</string>
                    </property>
@@ -612,8 +631,14 @@ QPushButton:pressed {
                  </item>
                  <item>
                   <widget class="QSlider" name="frequency_slider">
+                   <property name="cursor">
+                    <cursorShape>OpenHandCursor</cursorShape>
+                   </property>
                    <property name="maximum">
-                    <number>500</number>
+                    <number>250</number>
+                   </property>
+                   <property name="value">
+                    <number>0</number>
                    </property>
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
@@ -671,6 +696,9 @@ QPushButton:pressed {
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
+                   <property name="cursor">
+                    <cursorShape>PointingHandCursor</cursorShape>
+                   </property>
                    <property name="text">
                     <string>Noise</string>
                    </property>
@@ -724,6 +752,18 @@ QPushButton:pressed {
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>0</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>0</string>
                    </property>
@@ -744,8 +784,11 @@ QPushButton:pressed {
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="cursor">
+                    <cursorShape>OpenHandCursor</cursorShape>
+                   </property>
                    <property name="maximum">
-                    <number>50</number>
+                    <number>10</number>
                    </property>
                    <property name="singleStep">
                     <number>1</number>
@@ -780,7 +823,7 @@ QPushButton:pressed {
                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;click on a signal to activat&lt;/p&gt;&lt;p&gt;douple click for deactivate all signals&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">border: 1px solid #ccc;</string>
+                <string notr="true"/>
                </property>
               </widget>
              </item>
@@ -805,7 +848,7 @@ QPushButton:pressed {
                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;click on a signal to activat&lt;/p&gt;&lt;p&gt;douple click for deactivate all signals&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">border: 1px solid #ccc;</string>
+                <string notr="true"/>
                </property>
               </widget>
              </item>
@@ -842,6 +885,7 @@ QPushButton:pressed {
              <font>
               <family>Ubuntu</family>
               <pointsize>-1</pointsize>
+              <weight>50</weight>
               <bold>false</bold>
              </font>
             </property>
@@ -861,7 +905,11 @@ QTableWidget{
 	  background-color: #19232D;
 	font-size: 18px;
 	font-weight: normal;
-}</string>
+}
+QTableWidget::item{
+border: 1px solid #ccc;
+}
+</string>
             </property>
             <attribute name="horizontalHeaderCascadingSectionResizes">
              <bool>false</bool>

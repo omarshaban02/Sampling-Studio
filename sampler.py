@@ -62,9 +62,9 @@ class AbstractSignal(object):
   def SNR(self):
     return self._SNR
   @SNR.setter
-  def SNR(self,value):
-    self._SNR=value
-    random_numbers  = np.random.normal(0,0.1,self.space_length)
+  def SNR(self, value):
+    self._SNR = (10 ** value) / 10
+    random_numbers = np.random.normal(0,0.1,self.space_length)
     alpha = np.sqrt(self._SNR * (np.sum(np.square(random_numbers))/np.sum(np.square(np.asarray(self.signal)))))
     self.noise_values = alpha * random_numbers
     
@@ -199,8 +199,8 @@ class Composer(AbstractSignal):
     freq = 0
     phase = 0
     for signal in self.signals:
-      amp = signal[0]
-      freq = signal[1]
+      freq = signal[0]
+      amp = signal[1]
       phase = signal[2]
       t = self.linspace
       composed += amp* np.cos(2*np.pi*freq*t + phase)
@@ -229,60 +229,3 @@ class Composer(AbstractSignal):
   def signal_plot(self,value):
     self._signal_plot = value
 
-
-
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(700, 500)
-        MainWindow.setStyleSheet("QPushButton{\n"
-"border-radius: 30px;\n"
-"background-color: green;\n"
-"}\n"
-"QPushButton:hover{\n"
-"border-radius: 30px;\n"
-"background-color: red;\n"
-"}")
-        
-
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.centralwidget.setObjectName("centralwidget")
-       
-        self.graphicsView = PlotWidget(self.centralwidget)
-        self.graphicsView.setGeometry(QtCore.QRect(60, 40, 681, 201))
-        self.graphicsView.setObjectName("graphicsView")
-
-        signals = [(1,5,0)]
-        s = Composer(signals)
-        s.SNR = 3
-        s.resampling_freq = 125
-        self.graphicsView.addItem(s.signal_plot)
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 26))
-        self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
-        self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
-       
-
-        self.retranslateUi(MainWindow)
-  
-    def retranslateUi(self, MainWindow):
-        _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-       
-
-from pyqtgraph import PlotWidget
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    
-    sys.exit(app.exec_())
