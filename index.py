@@ -27,7 +27,7 @@ class MainApp(QMainWindow, ui):
         super(MainApp, self).__init__(parent)
         QMainWindow.__init__(self)
         self.setupUi(self)
-        self.resize(1400, 900)
+        self.resize(1500, 940)
 
         self.signal_data = None
         self.signal = None
@@ -46,6 +46,7 @@ class MainApp(QMainWindow, ui):
         self.plot_widget1.setLabel("bottom", text = "Frequency (Hz)")
         self.plot_widget1.setLabel("left", text = "Amplitude (mV)")
         self.plot_widget1.setTitle("Signal and sampled")
+
 
         self.plot_widget2 = pg.PlotWidget(self.graphics_view2)
         self.graphics_view_layout2 = QHBoxLayout(self.graphics_view2)
@@ -100,11 +101,14 @@ class MainApp(QMainWindow, ui):
 
         self.frequency_slider.valueChanged.connect(self.change_samples_according_to_frequency)
         self.frequency_slider.sliderPressed.connect(lambda: self.change_slider_cursor(self.frequency_slider))
+        self.frequency_slider.sliderReleased.connect(lambda: self.reset_slider_cursor(self.frequency_slider))
 
         self.SNR_slider.valueChanged.connect(self.add_noise_to_signal)
         self.SNR_slider.sliderPressed.connect(lambda: self.change_slider_cursor(self.SNR_slider))
+        self.SNR_slider.sliderReleased.connect(lambda: self.reset_slider_cursor(self.SNR_slider))
 
         self.actual_radioButton.toggled.connect(self.toggle_actual_normalized_freq)
+
         self.noise_radioButton.toggled.connect(self.toggle_enable_disable_SNR_slider)
 
         self.open_btn.clicked.connect(self.open_signal_file)
@@ -119,7 +123,7 @@ class MainApp(QMainWindow, ui):
         self.table_of_signals.setColumnWidth(1, 110)
         self.table_of_signals.setColumnWidth(2, 80)
         self.table_of_signals.setColumnWidth(3, 50)
-
+        self.add_row()
     def add_row(self):
         row = self.table_of_signals.rowCount()
         self.table_of_signals.setRowCount(row + 1)
@@ -177,7 +181,7 @@ class MainApp(QMainWindow, ui):
     def toggle_side_bar(self):
         if self.mixer_radioButton.isChecked():
             # for slide activate_slider and disable the other buttons
-            new_width = 400
+            new_width = 440
         else:
             new_width = 0
         self.animation = QPropertyAnimation(self.mixer_frame, b"minimumWidth")
@@ -260,12 +264,16 @@ class MainApp(QMainWindow, ui):
     def toggle_actual_normalized_freq(self, checked):
         if checked:
             self.Fmax_label.setText("Hz")
-            self.frequency_slider.setMaximum(250)
+            self.frequency_slider.setSingleStep(1)
         else:
             self.Fmax_label.setText("Fmax")
-            self.frequency_slider.setMaximum(10)
+            self.frequency_slider.setSingleStep(10)
 
-
+    def set_frequency_value_to_label(self):
+        if self.actual_radioButton.isChecked:
+            self.frequency_value_label.setNum(self.frequency_slider.value())
+        else:
+            self.frequency_value_label.setNum((self.frequency_slider.value() / 10))
 
     def toggle_enable_disable_SNR_slider(self, checked):
         if checked:
@@ -334,13 +342,15 @@ class MainApp(QMainWindow, ui):
 
 
     def change_slider_cursor(self, slider):
-        slider.setCursor(Qt.ClosedHandCursor)
-
-    def set_frequency_value_to_label(self):
-        if self.signal_is_mixed:
-            self.frequency_value_label.setNum(self.frequency_slider.value()/self.Fmax_for_mixed_signal)
+        if self.signal != None or self.mixed_signal != None:
+            slider.setCursor(Qt.ClosedHandCursor)
         else:
-            self.frequency_value_label.setNum(self.frequency_slider.value()/62.5)
+            QMessageBox.critical(None, "Error", "No signal found", QMessageBox.Ok)
+
+    def reset_slider_cursor(self, slider):
+        slider.setCursor(Qt.OpenHandCursor)
+
+
 
 # def display_sampling_freq(self):
     #     self.frequency_value_label.setNum(self.frequency_slider.value())
