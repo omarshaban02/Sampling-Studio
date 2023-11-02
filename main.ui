@@ -10,6 +10,12 @@
     <height>945</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -495,7 +501,7 @@ QPushButton:pressed {
               <item>
                <widget class="QFrame" name="frame_6">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
                   <verstretch>20</verstretch>
                  </sizepolicy>
@@ -518,9 +524,9 @@ QPushButton:pressed {
                 <property name="frameShadow">
                  <enum>QFrame::Raised</enum>
                 </property>
-                <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0">
+                <layout class="QHBoxLayout" name="horizontalLayout_4">
                  <property name="spacing">
-                  <number>0</number>
+                  <number>30</number>
                  </property>
                  <property name="leftMargin">
                   <number>0</number>
@@ -532,7 +538,7 @@ QPushButton:pressed {
                   <number>0</number>
                  </property>
                  <property name="bottomMargin">
-                  <number>0</number>
+                  <number>10</number>
                  </property>
                  <item>
                   <widget class="QRadioButton" name="actual_radioButton">
@@ -556,6 +562,19 @@ QPushButton:pressed {
                     <string>Normalized</string>
                    </property>
                   </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_2">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>315</width>
+                     <height>17</height>
+                    </size>
+                   </property>
+                  </spacer>
                  </item>
                 </layout>
                </widget>
@@ -636,6 +655,12 @@ QPushButton:pressed {
                    </property>
                    <property name="maximum">
                     <number>250</number>
+                   </property>
+                   <property name="singleStep">
+                    <number>1</number>
+                   </property>
+                   <property name="pageStep">
+                    <number>10</number>
                    </property>
                    <property name="value">
                     <number>0</number>
@@ -912,21 +937,60 @@ QPushButton:pressed {
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_6">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>7</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item>
-           <widget class="QTableWidget" name="table_of_signals">
-            <property name="font">
-             <font>
-              <family>Ubuntu</family>
-              <pointsize>-1</pointsize>
-              <weight>50</weight>
-              <bold>false</bold>
-             </font>
+           <widget class="QFrame" name="table_frame">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
             </property>
-            <property name="cursor" stdset="0">
-             <cursorShape>PointingHandCursor</cursorShape>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
             </property>
-            <property name="styleSheet">
-             <string notr="true">QHeaderView::section{
+            <layout class="QGridLayout" name="gridLayout_2">
+             <property name="leftMargin">
+              <number>25</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item row="0" column="0">
+              <widget class="QTableWidget" name="table_of_signals">
+               <property name="font">
+                <font>
+                 <family>Ubuntu</family>
+                 <pointsize>-1</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="cursor" stdset="0">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QHeaderView::section{
 	border: 1px solid #ccc;
 	background-color: rgba(255, 255, 255, 0);
 	font-size: 19px;
@@ -943,13 +1007,16 @@ QTableWidget::item{
 border: 1px solid #ccc;
 }
 </string>
-            </property>
-            <property name="cornerButtonEnabled">
-             <bool>true</bool>
-            </property>
-            <attribute name="horizontalHeaderCascadingSectionResizes">
-             <bool>false</bool>
-            </attribute>
+               </property>
+               <property name="cornerButtonEnabled">
+                <bool>true</bool>
+               </property>
+               <attribute name="horizontalHeaderCascadingSectionResizes">
+                <bool>false</bool>
+               </attribute>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
           <item>
@@ -1128,5 +1195,38 @@ border: 1px solid #ccc;
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>SNR_slider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>SNR_value_label</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>872</x>
+     <y>370</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>767</x>
+     <y>374</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>frequency_slider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>frequency_value_label</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>271</x>
+     <y>375</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>112</x>
+     <y>379</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

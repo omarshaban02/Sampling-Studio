@@ -27,7 +27,7 @@ class MainApp(QMainWindow, ui):
         super(MainApp, self).__init__(parent)
         QMainWindow.__init__(self)
         self.setupUi(self)
-        self.resize(1500, 940)
+        self.resize(1450, 900)
 
         self.signal_data = None
         self.signal = None
@@ -94,8 +94,6 @@ class MainApp(QMainWindow, ui):
         self.mix_btn.clicked.connect(self.read_table_data)
         self.add_btn.clicked.connect(self.add_mixed_signal_to_widget1)
 
-        self.frequency_slider.valueChanged.connect(self.set_frequency_value_to_label)
-
         self.SNR_slider.valueChanged.connect(lambda: self.SNR_value_label.setNum(
             self.SNR_slider.value()))
 
@@ -119,17 +117,16 @@ class MainApp(QMainWindow, ui):
     def create_table_of_signals(self):
         self.table_of_signals.setColumnCount(4)
         self.table_of_signals.setHorizontalHeaderLabels(('Frequency', 'Amplitude', 'Shift', ''))
-        self.table_of_signals.setColumnWidth(0, 110)
-        self.table_of_signals.setColumnWidth(1, 110)
-        self.table_of_signals.setColumnWidth(2, 80)
-        self.table_of_signals.setColumnWidth(3, 50)
+        self.table_of_signals.setColumnWidth(0, 130)
+        self.table_of_signals.setColumnWidth(1, 130)
+        self.table_of_signals.setColumnWidth(2, 100)
+        self.table_of_signals.setColumnWidth(3, 70)
         self.add_row()
+
     def add_row(self):
         row = self.table_of_signals.rowCount()
         self.table_of_signals.setRowCount(row + 1)
         self.table_of_signals.setRowHeight(row, 30)
-
-
 
         for col in range(4):  # Add buttons to all columns (0, 1, 2, 3)
             if col == 3:  # For the last column (index 3), add the delete button
@@ -139,7 +136,6 @@ class MainApp(QMainWindow, ui):
                 button.setStyleSheet("QPushButton{background-color: rgba(255,255,255,0); border:1px solid rgba(255,255,255,0);} QPushButton:pressed{margin-top:2px }")
                 self.table_of_signals.setCellWidget(row, col, button)
                 button.clicked.connect(lambda _, row=row: self.delete_row(row))
-
 
     def delete_row(self, row):
         if row >= 0 and row < self.table_of_signals.rowCount():
@@ -181,7 +177,7 @@ class MainApp(QMainWindow, ui):
     def toggle_side_bar(self):
         if self.mixer_radioButton.isChecked():
             # for slide activate_slider and disable the other buttons
-            new_width = 440
+            new_width = 500
         else:
             new_width = 0
         self.animation = QPropertyAnimation(self.mixer_frame, b"minimumWidth")
@@ -225,14 +221,13 @@ class MainApp(QMainWindow, ui):
                     try:
                         row_data.append(float(widget_item.text()))
                     except ValueError as e:
-                        QMessageBox.critical(None, "Error", f"{e}: \n Signal in row {row + 1} has a string input", QMessageBox.Ok)
+                        QMessageBox.critical(None, "Error", f"{e}: \n Signal in row {row + 1} has a string input or empty cells", QMessageBox.Ok)
                         row_data = []
                         break
                 else:
                     pass
             if row_data:
                 self.composed_signals_list.append(row_data)
-
 
         self.plot_mixer_widget.clear()
         self.mixed_signal = Composer(self.composed_signals_list)
@@ -264,16 +259,16 @@ class MainApp(QMainWindow, ui):
     def toggle_actual_normalized_freq(self, checked):
         if checked:
             self.Fmax_label.setText("Hz")
-            self.frequency_slider.setSingleStep(1)
+            self.frequency_slider.setMaximum(250)
+            if self.signal and not self.signal_is_mixed:
+                self.frequency_slider.setValue(125)
+            elif self.signal_is_mixed:
+                self.frequency_slider.setValue(self.Fmax_for_mixed_signal * 2)
         else:
             self.Fmax_label.setText("Fmax")
-            self.frequency_slider.setSingleStep(10)
-
-    def set_frequency_value_to_label(self):
-        if self.actual_radioButton.isChecked:
-            self.frequency_value_label.setNum(self.frequency_slider.value())
-        else:
-            self.frequency_value_label.setNum((self.frequency_slider.value() / 10))
+            self.frequency_slider.setMaximum(10)
+            if self.signal or self.signal_is_mixed:
+                self.frequency_slider.setValue(2)
 
     def toggle_enable_disable_SNR_slider(self, checked):
         if checked:
@@ -286,13 +281,66 @@ class MainApp(QMainWindow, ui):
             self.SNR_label.setDisabled(True)
             self.SNR_value_label.setDisabled(True)
             self.dB_label.setDisabled(True)
-
+            #when slider disabled set value 0
+            self.SNR_slider.setValue(0)
     def change_samples_according_to_frequency(self):
-        if not self.signal_is_mixed:
-            self.plot_widget1.clear()
-            self.plot_widget2.clear()
-            self.plot_widget3.clear()
 
+        self.plot_widget1.clear()
+        self.plot_widget2.clear()
+        self.plot_widget3.clear()
+
+        if self.actual_radioButton.isChecked():
+            if self.signal_is_mixed:
+                self.mixed_signal.SNR = self.SNR_slider.value()
+                self.mixed_signal.resampling_freq = self.frequency_slider.value()
+
+                self.plot_widget1.addItem(self.mixed_signal.signal_plot)
+                self.plot_widget1.addItem(self.mixed_signal.resampled_signal_plot)
+                self.plot_widget2.addItem(self.mixed_signal.recovered_signal_plot)
+                self.plot_widget3.addItem(self.mixed_signal.difference_signal_plot)
+            else:
+                self.signal.SNR = self.SNR_slider.value()
+                self.signal.resampling_freq = int(self.frequency_slider.value())
+
+                self.plot_widget1.addItem(self.signal.signal_plot)
+                self.plot_widget1.addItem(self.signal.resampled_signal_plot)
+                self.plot_widget2.addItem(self.signal.recovered_signal_plot)
+                self.plot_widget3.addItem(self.signal.difference_signal_plot)
+        else:
+            if self.signal_is_mixed:
+                self.mixed_signal.SNR = self.SNR_slider.value()
+                self.mixed_signal.resampling_freq = int(self.frequency_slider.value()*self.Fmax_for_mixed_signal)
+
+                self.plot_widget1.addItem(self.mixed_signal.signal_plot)
+                self.plot_widget1.addItem(self.mixed_signal.resampled_signal_plot)
+                self.plot_widget2.addItem(self.mixed_signal.recovered_signal_plot)
+                self.plot_widget3.addItem(self.mixed_signal.difference_signal_plot)
+            else:
+                self.signal.SNR = self.SNR_slider.value()
+                self.signal.resampling_freq = int(self.frequency_slider.value() * 62.5)
+
+                self.plot_widget1.addItem(self.signal.signal_plot)
+                self.plot_widget1.addItem(self.signal.resampled_signal_plot)
+                self.plot_widget2.addItem(self.signal.recovered_signal_plot)
+                self.plot_widget3.addItem(self.signal.difference_signal_plot)
+
+
+
+    def add_noise_to_signal(self):
+        self.plot_widget1.clear()
+        self.plot_widget2.clear()
+        self.plot_widget3.clear()
+
+        if self.signal_is_mixed:
+            self.mixed_signal.SNR = self.SNR_slider.value()
+            self.mixed_signal.resampling_freq = int(self.frequency_slider.value())
+
+            self.plot_widget1.addItem(self.mixed_signal.signal_plot)
+            self.plot_widget1.addItem(self.mixed_signal.resampled_signal_plot)
+            self.plot_widget2.addItem(self.mixed_signal.recovered_signal_plot)
+            self.plot_widget3.addItem(self.mixed_signal.difference_signal_plot)
+
+        else:
             self.signal.SNR = self.SNR_slider.value()
             self.signal.resampling_freq = self.frequency_slider.value()
 
@@ -300,60 +348,17 @@ class MainApp(QMainWindow, ui):
             self.plot_widget1.addItem(self.signal.resampled_signal_plot)
             self.plot_widget2.addItem(self.signal.recovered_signal_plot)
             self.plot_widget3.addItem(self.signal.difference_signal_plot)
-        else:
-            self.plot_widget1.clear()
-            self.plot_widget2.clear()
-            self.plot_widget3.clear()
 
-            self.mixed_signal.SNR = self.SNR_slider.value()
-            self.mixed_signal.resampling_freq = self.frequency_slider.value()
-
-            self.plot_widget1.addItem(self.mixed_signal.signal_plot)
-            self.plot_widget1.addItem(self.mixed_signal.resampled_signal_plot)
-            self.plot_widget2.addItem(self.mixed_signal.recovered_signal_plot)
-            self.plot_widget3.addItem(self.mixed_signal.difference_signal_plot)
-
-
-    def add_noise_to_signal(self):
-        if not self.signal_is_mixed:
-            self.plot_widget1.clear()
-            self.plot_widget2.clear()
-            self.plot_widget3.clear()
-
-            self.signal.SNR = (self.SNR_slider.value())
-            self.signal.resampling_freq = self.frequency_slider.value()
-
-            self.plot_widget1.addItem(self.signal.signal_plot)
-            self.plot_widget1.addItem(self.signal.resampled_signal_plot)
-            self.plot_widget2.addItem(self.signal.recovered_signal_plot)
-            self.plot_widget3.addItem(self.signal.difference_signal_plot)
-        else:
-            self.plot_widget1.clear()
-            self.plot_widget2.clear()
-            self.plot_widget3.clear()
-
-            self.mixed_signal.SNR = (self.SNR_slider.value())
-            self.mixed_signal.resampling_freq = self.frequency_slider.value()
-
-            self.plot_widget1.addItem(self.mixed_signal.signal_plot)
-            self.plot_widget1.addItem(self.mixed_signal.resampled_signal_plot)
-            self.plot_widget2.addItem(self.mixed_signal.recovered_signal_plot)
-            self.plot_widget3.addItem(self.mixed_signal.difference_signal_plot)
 
 
     def change_slider_cursor(self, slider):
-        if self.signal != None or self.mixed_signal != None:
+        if self.signal or self.mixed_signal:
             slider.setCursor(Qt.ClosedHandCursor)
         else:
             QMessageBox.critical(None, "Error", "No signal found", QMessageBox.Ok)
 
     def reset_slider_cursor(self, slider):
         slider.setCursor(Qt.OpenHandCursor)
-
-
-
-# def display_sampling_freq(self):
-    #     self.frequency_value_label.setNum(self.frequency_slider.value())
 
 
 def main():
