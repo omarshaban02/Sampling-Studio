@@ -77,7 +77,8 @@ class AbstractSignal(object):
 
   @property
   def difference_signal_plot(self):
-    recovered_signal = np.asarray(self.sinc_interpolation(self.resampling_data,self.sampling_freq, self.linspace))
+    # recovered_signal = np.asarray(self.sinc_interpolation(self.resampling_data,self.sampling_freq, self.linspace))
+    recovered_signal = np.asarray(self.sinc_interpolation(self.resampling_data,self.resampling_freq, self.linspace))
     original_signal = np.asarray(self.signal)
     plt = pg.PlotDataItem(self.linspace, original_signal-recovered_signal)
     self.difference_signal_plot = plt
@@ -89,7 +90,8 @@ class AbstractSignal(object):
 
   @property
   def recovered_signal_plot(self):
-    signal = np.asarray(self.sinc_interpolation(self.resampling_data,self.sampling_freq, self.linspace))+self.noise_values
+    # signal = np.asarray(self.sinc_interpolation(self.resampling_data,self.sampling_freq, self.linspace))+self.noise_values
+    signal = np.asarray(self.sinc_interpolation(self.resampling_data,self.resampling_freq, self.linspace))+self.noise_values
     plt = pg.PlotDataItem(self.linspace, signal)
     self.recovered_signal_plot=plt
     return self._recovered_signal_plot

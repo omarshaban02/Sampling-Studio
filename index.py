@@ -211,29 +211,38 @@ class MainApp(QMainWindow, ui):
 
     def read_table_data(self):
         self.composed_signals_list = []
+        num_of_incomplete_rows = 0
+        cells_with_str_input_cells = []
         row_count = self.table_of_signals.rowCount()
         column_count = self.table_of_signals.columnCount()
         for row in range(row_count):
             row_data = []
             for column in range(column_count):
                 widget_item = self.table_of_signals.item(row, column)
-                if widget_item and widget_item.text:
+                if widget_item and widget_item.text and widget_item.text() != "":
                     try:
                         row_data.append(float(widget_item.text()))
                     except ValueError as e:
-                        QMessageBox.critical(None, "Error", f"{e}: \n Signal in row {row + 1} has a string input or empty cells", QMessageBox.Ok)
-                        row_data = []
-                        break
-                else:
-                    pass
-            if row_data:
-                self.composed_signals_list.append(row_data)
+                        row_data.append(widget_item.text())
+                        cells_with_str_input_cells.append(row + 1)
+            self.composed_signals_list.append(row_data)
+            if len(row_data) != 3:
+                num_of_incomplete_rows += 1
 
-        self.plot_mixer_widget.clear()
-        self.mixed_signal = Composer(self.composed_signals_list)
-        self.mixed_signal.SNR = 0
-        self.mixed_signal.resampling_freq = self.frequency_slider.value()
-        self.plot_mixer_widget.addItem(self.mixed_signal.signal_plot)
+        if self.composed_signals_list:
+            if num_of_incomplete_rows:
+                QMessageBox.warning(None, "Warning", f"There are {num_of_incomplete_rows} components have incomplete parameters", QMessageBox.Ok)
+            if cells_with_str_input_cells:
+                QMessageBox.critical(None, "Error", f"Signal in row/s # {cells_with_str_input_cells} have/has a string input", QMessageBox.Ok)
+            if not (num_of_incomplete_rows or cells_with_str_input_cells):
+                self.plot_mixer_widget.clear()
+                self.mixed_signal = Composer(self.composed_signals_list)
+                self.mixed_signal.SNR = 0
+                self.mixed_signal.resampling_freq = self.frequency_slider.value()
+                self.plot_mixer_widget.addItem(self.mixed_signal.signal_plot)
+        else:
+            QMessageBox.critical(None, "Error", f"No Signals are added", QMessageBox.Ok)
+
 
     def add_mixed_signal_to_widget1(self):
         self.signal_is_mixed = True
@@ -264,11 +273,19 @@ class MainApp(QMainWindow, ui):
                 self.frequency_slider.setValue(125)
             elif self.signal_is_mixed:
                 self.frequency_slider.setValue(self.Fmax_for_mixed_signal * 2)
+            if self.signal_is_mixed:
+                self.mixed_signal.SNR = self.SNR_slider.value()
+            else:
+                self.signal.SNR = self.SNR_slider.value()
         else:
             self.Fmax_label.setText("Fmax")
             self.frequency_slider.setMaximum(10)
             if self.signal or self.signal_is_mixed:
                 self.frequency_slider.setValue(2)
+            if self.signal_is_mixed:
+                self.mixed_signal.SNR = self.SNR_slider.value()
+            else:
+                self.signal.SNR = self.SNR_slider.value()
 
     def toggle_enable_disable_SNR_slider(self, checked):
         if checked:
@@ -283,6 +300,7 @@ class MainApp(QMainWindow, ui):
             self.dB_label.setDisabled(True)
             #when slider disabled set value 0
             self.SNR_slider.setValue(0)
+            self.signal.SNR = 0
     def change_samples_according_to_frequency(self):
 
         self.plot_widget1.clear()

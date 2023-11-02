@@ -379,7 +379,6 @@ QPushButton:pressed {
              <font>
               <family>Ubuntu</family>
               <pointsize>-1</pointsize>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -637,7 +636,7 @@ QPushButton:pressed {
                     </size>
                    </property>
                    <property name="text">
-                    <string>0</string>
+                    <string>1</string>
                    </property>
                   </widget>
                  </item>
@@ -653,6 +652,9 @@ QPushButton:pressed {
                    <property name="cursor">
                     <cursorShape>OpenHandCursor</cursorShape>
                    </property>
+                   <property name="minimum">
+                    <number>1</number>
+                   </property>
                    <property name="maximum">
                     <number>250</number>
                    </property>
@@ -663,10 +665,13 @@ QPushButton:pressed {
                     <number>10</number>
                    </property>
                    <property name="value">
-                    <number>0</number>
+                    <number>1</number>
                    </property>
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="tickPosition">
+                    <enum>QSlider::NoTicks</enum>
                    </property>
                   </widget>
                  </item>
@@ -982,7 +987,6 @@ QPushButton:pressed {
                 <font>
                  <family>Ubuntu</family>
                  <pointsize>-1</pointsize>
-                 <weight>50</weight>
                  <bold>false</bold>
                 </font>
                </property>
