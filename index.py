@@ -193,7 +193,7 @@ class MainApp(QMainWindow, ui):
 
         self.signal_is_mixed = False
         self.frequency_slider.setValue(125)
-        self.SNR_slider.setValue(0)
+        self.SNR_slider.setValue(10)
 
         self.signal_data = pd.read_csv(file_name).head().to_numpy()[0]
         self.signal = Signal(self.signal_data)
@@ -237,7 +237,7 @@ class MainApp(QMainWindow, ui):
             if not (num_of_incomplete_rows or cells_with_str_input_cells):
                 self.plot_mixer_widget.clear()
                 self.mixed_signal = Composer(self.composed_signals_list)
-                self.mixed_signal.SNR = 0
+                self.mixed_signal.SNR = 10
                 self.mixed_signal.resampling_freq = self.frequency_slider.value()
                 self.plot_mixer_widget.addItem(self.mixed_signal.signal_plot)
         else:
@@ -248,9 +248,9 @@ class MainApp(QMainWindow, ui):
         self.signal_is_mixed = True
         self.Fmax_for_mixed_signal = int((np.max(np.asarray(self.composed_signals_list).transpose()[0])))
         self.frequency_slider.setValue(2 * self.Fmax_for_mixed_signal)
-        self.SNR_slider.setValue(0)
+        self.SNR_slider.setValue(10)
 
-        self.mixed_signal.SNR = 0
+        self.mixed_signal.SNR = 10
         self.mixed_signal.sampling_freq = int(self.frequency_slider.value())
         self.mixed_signal.resampling_freq = int(self.frequency_slider.value())
 
@@ -299,8 +299,8 @@ class MainApp(QMainWindow, ui):
             self.SNR_value_label.setDisabled(True)
             self.dB_label.setDisabled(True)
             #when slider disabled set value 0
-            self.SNR_slider.setValue(0)
-            self.signal.SNR = 0
+            self.SNR_slider.setValue(10)
+            self.signal.SNR = 10
     def change_samples_according_to_frequency(self):
 
         self.plot_widget1.clear()
