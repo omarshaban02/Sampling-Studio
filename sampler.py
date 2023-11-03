@@ -16,8 +16,8 @@ class AbstractSignal(object):
     self._recovered_signal_plot = None
     self._time_range = (0, 1)
     self.space_length = 1000
-    self.linspace = np.linspace(self.time_range[0],self.time_range[1],self.space_length,endpoint=False)
-    self._signal = None
+    self.linspace = np.linspace(self.time_range[0],self.time_range[1],self.space_length,endpoint=False) # points for x-axis
+    self._signal = None # points for  y-axis
     self.noise_values = None
     
 
@@ -36,7 +36,8 @@ class AbstractSignal(object):
   @signal_plot.setter
   def signal_plot(self,value):
     self._signal_plot = value
-
+  
+  # plot for the scattered points
   @property
   def resampled_signal_plot(self):
     number_of_samples = self.resampling_freq * (self.time_range[1]-self.time_range[0])
@@ -66,7 +67,8 @@ class AbstractSignal(object):
     self._SNR = (10 ** value) / 10
     random_numbers = np.random.normal(0,0.1,self.space_length)
     alpha = np.sqrt(self._SNR * (np.sum(np.square(random_numbers))/np.sum(np.square(np.asarray(self.signal)))))
-    self.noise_values = alpha * random_numbers
+    self.noise_values =  random_numbers/ alpha
+  
     
   @property
   def resampling_freq(self):
@@ -77,7 +79,7 @@ class AbstractSignal(object):
 
   @property
   def difference_signal_plot(self):
-    # recovered_signal = np.asarray(self.sinc_interpolation(self.resampling_data,self.sampling_freq, self.linspace))
+    #recovered_signal = np.asarray(self.sinc_interpolation(self.resampling_data,self.sampling_freq, self.linspace))
     recovered_signal = np.asarray(self.sinc_interpolation(self.resampling_data,self.resampling_freq, self.linspace))
     original_signal = np.asarray(self.signal)
     plt = pg.PlotDataItem(self.linspace, original_signal-recovered_signal)
@@ -90,7 +92,7 @@ class AbstractSignal(object):
 
   @property
   def recovered_signal_plot(self):
-    # signal = np.asarray(self.sinc_interpolation(self.resampling_data,self.sampling_freq, self.linspace))+self.noise_values
+    #signal = np.asarray(self.sinc_interpolation(self.resampling_data,self.sampling_freq, self.linspace))+self.noise_values
     signal = np.asarray(self.sinc_interpolation(self.resampling_data,self.resampling_freq, self.linspace))+self.noise_values
     plt = pg.PlotDataItem(self.linspace, signal)
     self.recovered_signal_plot=plt
