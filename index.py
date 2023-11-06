@@ -1,3 +1,5 @@
+PATH = 'signals/mitbih_train.csv'
+
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
@@ -16,6 +18,7 @@ import urllib.request
 from sampler import AbstractSignal, Signal, Composer
 
 ui, _ = loadUiType('main.ui')
+
 
 
 class MainApp(QMainWindow, ui):
@@ -40,10 +43,10 @@ class MainApp(QMainWindow, ui):
         self.plot_widget1.setObjectName("plot_widget1")
         self.plot_widget1.setBackground((25, 35, 45))
         self.plot_widget1.showGrid(x=True, y=True)
-        self.plot_widget1.setLabel("bottom", text="Frequency (Hz)")
-        self.plot_widget1.setLabel("left", text="Amplitude (mV)")
+        self.plot_widget1.setLabel("bottom", text = "Frequency (Hz)")
+        self.plot_widget1.setLabel("left", text = "Amplitude (mV)")
         self.plot_widget1.setTitle("Signal and sampled")
-        self.plot_widget1.setLimits(xMin=-0.2, xMax=1.2)
+
 
         self.plot_widget2 = pg.PlotWidget(self.graphics_view2)
         self.graphics_view_layout2 = QHBoxLayout(self.graphics_view2)
@@ -52,8 +55,8 @@ class MainApp(QMainWindow, ui):
         self.plot_widget2.setObjectName("plot_widget2")
         self.plot_widget2.setBackground((25, 35, 45))
         self.plot_widget2.showGrid(x=True, y=True)
-        self.plot_widget2.setLabel("bottom", text="Frequency (Hz)")
-        self.plot_widget2.setLabel("left", text="Amplitude (mV)")
+        self.plot_widget2.setLabel("bottom", text = "Frequency (Hz)")
+        self.plot_widget2.setLabel("left", text = "Amplitude (mV)")
         self.plot_widget2.setTitle("Recovered signal")
 
         self.plot_widget3 = pg.PlotWidget(self.graphics_view3)
@@ -63,8 +66,8 @@ class MainApp(QMainWindow, ui):
         self.plot_widget3.setObjectName("plot_widget3")
         self.plot_widget3.setBackground((25, 35, 45))
         self.plot_widget3.showGrid(x=True, y=True)
-        self.plot_widget3.setLabel("bottom", text="Frequency (Hz)")
-        self.plot_widget3.setLabel("left", text="Amplitude (mV)")
+        self.plot_widget3.setLabel("bottom", text = "Frequency (Hz)")
+        self.plot_widget3.setLabel("left", text = "Amplitude (mV)")
         self.plot_widget3.setTitle("Error difference")
 
         self.plot_mixer_widget = pg.PlotWidget(self.mixer_graph_view)
@@ -74,8 +77,8 @@ class MainApp(QMainWindow, ui):
         self.plot_mixer_widget.setObjectName("plot_mixer_widget")
         self.plot_mixer_widget.setBackground((25, 35, 45))
         self.plot_mixer_widget.showGrid(x=True, y=True)
-        self.plot_mixer_widget.setLabel("bottom", text="Frequency (Hz)")
-        self.plot_mixer_widget.setLabel("left", text="Amplitude (mV)")
+        self.plot_mixer_widget.setLabel("bottom", text = "Frequency (Hz)")
+        self.plot_mixer_widget.setLabel("left", text = "Amplitude (mV)")
         self.plot_mixer_widget.setTitle("Mixed signal")
 
         self.composed_signals_list = []
@@ -108,6 +111,9 @@ class MainApp(QMainWindow, ui):
 
         self.open_btn.clicked.connect(self.open_signal_file)
 
+        
+
+
     def create_table_of_signals(self):
         self.table_of_signals.setColumnCount(4)
         self.table_of_signals.setHorizontalHeaderLabels(('Frequency', 'Amplitude', 'Shift', ''))
@@ -127,8 +133,7 @@ class MainApp(QMainWindow, ui):
                 button = QPushButton()
                 button.setObjectName(f'delete_btn{row}')
                 button.setIcon(QIcon('icons/trash copy.svg'))
-                button.setStyleSheet(
-                    "QPushButton{background-color: rgba(255,255,255,0); border:1px solid rgba(255,255,255,0);} QPushButton:pressed{margin-top:2px }")
+                button.setStyleSheet("QPushButton{background-color: rgba(255,255,255,0); border:1px solid rgba(255,255,255,0);} QPushButton:pressed{margin-top:2px }")
                 self.table_of_signals.setCellWidget(row, col, button)
                 button.clicked.connect(lambda _, row=row: self.delete_row(row))
 
@@ -152,7 +157,6 @@ class MainApp(QMainWindow, ui):
                     button.setObjectName(f'delete_btn{i}')
                     button.clicked.disconnect()  # Disconnect previous click connection
                     button.clicked.connect(lambda _, row=i: self.delete_row(row))  # Connect a new click connection
-
     # In the above code:
     # - We remove the widgets/items from the row that is being deleted, including the delete button.
     # - We then update the button object names and click connections for the remaining rows.
@@ -168,6 +172,7 @@ class MainApp(QMainWindow, ui):
             else:
                 item.setBackground(Qt.red)
                 self.table_of_signals.setCurrentCell(row, col)
+
 
     def toggle_side_bar(self):
         if self.mixer_radioButton.isChecked():
@@ -190,7 +195,7 @@ class MainApp(QMainWindow, ui):
         self.frequency_slider.setValue(125)
         self.SNR_slider.setValue(10)
 
-        self.signal_data = pd.read_csv(file_name).head().to_numpy()[0]
+        self.signal_data = pd.read_csv(file_name).values.transpose()[1][:1000]
         self.signal = Signal(self.signal_data)
         self.signal.SNR = self.SNR_slider.value()
         self.signal.resampling_freq = self.frequency_slider.value()
@@ -226,14 +231,10 @@ class MainApp(QMainWindow, ui):
 
         if self.composed_signals_list:
             if num_of_incomplete_rows:
-                QMessageBox.warning(None, "Warning",
-                                    f"There are {num_of_incomplete_rows} components have incomplete parameters",
-                                    QMessageBox.Ok)
-            elif cells_with_str_input_cells:
-                QMessageBox.critical(None, "Error",
-                                     f"Signal in row/s # {cells_with_str_input_cells} have/has a string input",
-                                     QMessageBox.Ok)
-            else:
+                QMessageBox.warning(None, "Warning", f"There are {num_of_incomplete_rows} components have incomplete parameters", QMessageBox.Ok)
+            if cells_with_str_input_cells:
+                QMessageBox.critical(None, "Error", f"Signal in row/s # {cells_with_str_input_cells} have/has a string input", QMessageBox.Ok)
+            if not (num_of_incomplete_rows or cells_with_str_input_cells):
                 self.plot_mixer_widget.clear()
                 self.mixed_signal = Composer(self.composed_signals_list)
                 self.mixed_signal.SNR = 10
@@ -241,6 +242,7 @@ class MainApp(QMainWindow, ui):
                 self.plot_mixer_widget.addItem(self.mixed_signal.signal_plot)
         else:
             QMessageBox.critical(None, "Error", f"No Signals are added", QMessageBox.Ok)
+
 
     def add_mixed_signal_to_widget1(self):
         self.signal_is_mixed = True
@@ -261,8 +263,10 @@ class MainApp(QMainWindow, ui):
         self.plot_widget2.addItem(self.mixed_signal.recovered_signal_plot)
         self.plot_widget3.addItem(self.mixed_signal.difference_signal_plot)
 
+
+
     def toggle_actual_normalized_freq(self, checked):
-        if checked:  # actual
+        if checked:
             self.Fmax_label.setText("Hz")
             self.frequency_slider.setMaximum(250)
             if self.signal and not self.signal_is_mixed:
@@ -294,10 +298,9 @@ class MainApp(QMainWindow, ui):
             self.SNR_label.setDisabled(True)
             self.SNR_value_label.setDisabled(True)
             self.dB_label.setDisabled(True)
-            # when slider disabled set value 0
+            #when slider disabled set value 0
             self.SNR_slider.setValue(10)
             self.signal.SNR = 10
-
     def change_samples_according_to_frequency(self):
 
         self.plot_widget1.clear()
@@ -324,7 +327,7 @@ class MainApp(QMainWindow, ui):
         else:
             if self.signal_is_mixed:
                 self.mixed_signal.SNR = self.SNR_slider.value()
-                self.mixed_signal.resampling_freq = int(self.frequency_slider.value() * self.Fmax_for_mixed_signal)
+                self.mixed_signal.resampling_freq = int(self.frequency_slider.value()*self.Fmax_for_mixed_signal)
 
                 self.plot_widget1.addItem(self.mixed_signal.signal_plot)
                 self.plot_widget1.addItem(self.mixed_signal.resampled_signal_plot)
@@ -338,6 +341,8 @@ class MainApp(QMainWindow, ui):
                 self.plot_widget1.addItem(self.signal.resampled_signal_plot)
                 self.plot_widget2.addItem(self.signal.recovered_signal_plot)
                 self.plot_widget3.addItem(self.signal.difference_signal_plot)
+
+
 
     def add_noise_to_signal(self):
         self.plot_widget1.clear()
@@ -361,6 +366,8 @@ class MainApp(QMainWindow, ui):
             self.plot_widget1.addItem(self.signal.resampled_signal_plot)
             self.plot_widget2.addItem(self.signal.recovered_signal_plot)
             self.plot_widget3.addItem(self.signal.difference_signal_plot)
+
+
 
     def change_slider_cursor(self, slider):
         if self.signal or self.mixed_signal:
