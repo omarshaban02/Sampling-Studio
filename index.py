@@ -179,7 +179,7 @@ class MainApp(QMainWindow, ui):
         self.frequency_slider.setValue(125)
         self.SNR_slider.setValue(10)
 
-        self.signal_data = pd.read_csv(file_name).head().to_numpy()[0]
+        self.signal_data = pd.read_csv(file_name).values.transpose()[1][:1000]
         self.signal = Signal(self.signal_data)
         self.signal.SNR = self.SNR_slider.value()
         self.signal.resampling_freq = self.frequency_slider.value()
@@ -230,6 +230,7 @@ class MainApp(QMainWindow, ui):
                 self.plot_mixer_widget.addItem(self.mixed_signal.signal_plot)
         else:
             QMessageBox.critical(None, "Error", f"No Signals are added", QMessageBox.Ok)
+
 
     def add_mixed_signal_to_widget1(self):
         self.signal_is_mixed = True
