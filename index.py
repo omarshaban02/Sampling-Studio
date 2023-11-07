@@ -86,7 +86,7 @@ class MainApp(QMainWindow, ui):
 
         self.float_validator = QDoubleValidator()
         self.float_validator.setNotation(QDoubleValidator.StandardNotation)
-        self.table_of_signals.cellChanged.connect(self.validate_input)
+
 
         self.mix_btn.clicked.connect(self.read_table_data)
         self.add_btn.clicked.connect(self.add_mixed_signal_to_widget1)
@@ -102,7 +102,7 @@ class MainApp(QMainWindow, ui):
         self.SNR_slider.sliderPressed.connect(lambda: self.change_slider_cursor(self.SNR_slider))
         self.SNR_slider.sliderReleased.connect(lambda: self.reset_slider_cursor(self.SNR_slider))
 
-        self.actual_radioButton.toggled.connect(self.toggle_actual_normalized_freq)
+        self.actual_radioButton.toggled.connect(self.toggle_actual_normalized_frequency)
 
         self.noise_radioButton.toggled.connect(self.toggle_enable_disable_SNR_slider)
 
@@ -158,17 +158,6 @@ class MainApp(QMainWindow, ui):
     # - We then update the button object names and click connections for the remaining rows.
     # - By disconnecting the previous click connection and connecting a new one, we ensure that the lambda function captures the correct row index for each button.
 
-    def validate_input(self, row, col):
-        item = self.table_of_signals.item(row, col)
-        if item:
-            text = item.text()
-            state, _, pos = self.float_validator.validate(text, 0)
-            if state == QDoubleValidator.Acceptable:
-                item.setBackground(QColor(25, 35, 45))
-            else:
-                item.setBackground(Qt.red)
-                self.table_of_signals.setCurrentCell(row, col)
-
     def toggle_side_bar(self):
         if self.mixer_radioButton.isChecked():
             # for slide activate_slider and disable the other buttons
@@ -207,7 +196,7 @@ class MainApp(QMainWindow, ui):
     def read_table_data(self):
         self.composed_signals_list = []
         num_of_incomplete_rows = 0
-        cells_with_str_input_cells = []
+        cells_with_str_input_cells = set()
         row_count = self.table_of_signals.rowCount()
         column_count = self.table_of_signals.columnCount()
         for row in range(row_count):
@@ -219,7 +208,7 @@ class MainApp(QMainWindow, ui):
                         row_data.append(float(widget_item.text()))
                     except ValueError as e:
                         row_data.append(widget_item.text())
-                        cells_with_str_input_cells.append(row + 1)
+                        cells_with_str_input_cells.add(row + 1)
             self.composed_signals_list.append(row_data)
             if len(row_data) != 3:
                 num_of_incomplete_rows += 1
@@ -261,7 +250,7 @@ class MainApp(QMainWindow, ui):
         self.plot_widget2.addItem(self.mixed_signal.recovered_signal_plot)
         self.plot_widget3.addItem(self.mixed_signal.difference_signal_plot)
 
-    def toggle_actual_normalized_freq(self, checked):
+    def toggle_actual_normalized_frequency(self, checked):
         if checked:  # actual
             self.Fmax_label.setText("Hz")
             self.frequency_slider.setMaximum(250)
