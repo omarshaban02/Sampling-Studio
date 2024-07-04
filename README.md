@@ -123,9 +123,33 @@ pip install -r requirements.txt
 - PyQtGraph for the plotting capabilities.
 - Contributors and community for support and libraries.
 
-## Contributors
+## Contributors <a name = "contributors"></a>
 
-- [Omar Shaban](https://github.com/omarshaban02)
-- [Abdel Rahman Shawky](https://github.com/AbdulrahmanGhitani)
-- [Abdullah Omran](https://github.com/AbdullahOmran)
-- [Ahmed Kamal](https://github.com/AhmedKamalMohammedElSayed)
+<table>
+  <tr>
+    <td align="center">
+    <a href="https://github.com/AbdulrahmanGhitani" target="_black">
+    <img src="https://avatars.githubusercontent.com/u/114954706?v=4" width="150px;" alt="Abdulrahman Shawky"/>
+    <br />
+    <sub><b>Abdulrahman Shawky</b></sub></a>
+    </td>
+<td align="center">
+    <a href="https://github.com/omarnasser0" target="_black">
+    <img src="https://avatars.githubusercontent.com/u/100535160?v=4" width="150px;" alt="omarnasser0"/>
+    <br />
+    <sub><b>Omar Abdulnasser</b></sub></a>
+    </td>
+         <td align="center">
+    <a href="https://github.com/AhmedKamalMohammedElSayed" target="_black">
+    <img src="https://avatars.githubusercontent.com/u/96977876?v=4" width="150px;" alt="Ahmed Kamal"/>
+    <br />
+    <sub><b>Ahmed Kamal</b></sub></a>
+    </td>
+         <td align="center">
+    <a href="https://github.com/AbdullahOmran" target="_black">
+    <img src="https://avatars.githubusercontent.com/u/30219936?v=4" width="150px;" alt="Abdullah Omran"/>
+    <br />
+    <sub><b>Abdullah Omran</b></sub></a>
+    </td>
+      </tr>
+ </table>
