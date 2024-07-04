@@ -43,15 +43,18 @@ pip install -r requirements.txt
 ## Features
 
 - Load signal data from CSV files
-![Load Signal](assets/open.png)
-![Load Error](assets/error1.png)
+
+<img src="assets/open.png" alt="Load Signal" width="500"/> <img src="assets/error1.png" alt="Load Error" width="500"/>
+
 - Mix multiple signals with customizable frequency, amplitude, and shift
-![Mix Signals](assets/mix.png)
-![Mix Error](assets/error2.png)
-![Mix Error](assets/error3.png)
+
+<img src="assets/mix.png" alt="Mix Signals" width="330"/> <img src="assets/error2.png" alt="Mix Error" width="330"/>  <img src="assets/error3.png" alt="Mix Error" width="330"/>
+
 - Add noise to signals with adjustable Signal-to-Noise Ratio (SNR)
 - Resample signals with adjustable frequency sliders
-![Imported Signal](assets/import.png)
+
+<img src="assets/import.png" alt="Imported Signal" width="500"/>
+
 - Visualize original, sampled, recovered signals, and error differences
 
 ## Dependencies
@@ -67,15 +70,15 @@ pip install -r requirements.txt
 
 1. Click the `Open` button to load a signal from a CSV file.
 
-![Sample](assets/sample.gif)
-
+<img src="assets/sample.gif" alt="Sample" width="500"/>
+ 
 ### Mixing Signals
 
 1. If you want to synthesize a signal, Add signal components by entering frequency, amplitude, and shift values in the table.
 2. Click the `Mix` button to compose the signals.
 3. Click the `Add to Main Plot` button to add the mixed signal to the main plot.
 
-![Mix with noise](assets/mix-with-noise.gif)
+<img src="assets/mix-with-noise.gif" alt="Mix with noise" width="500"/>
 
 ### Adjusting SNR
 
@@ -88,7 +91,8 @@ pip install -r requirements.txt
 1. Adjust the frequency slider to resample the signal.
 2. The plots will update automatically to reflect the new sampling rate.
 
-![Noise](assets/noise.gif)
+<img src="assets/noise.gif" alt="Noise" width="500"/>
+
 
 ## Plot Descriptions
 
