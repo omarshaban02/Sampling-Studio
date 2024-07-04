@@ -175,13 +175,15 @@ class MainApp(QMainWindow, ui):
         options = QFileDialog.Options()
         file_name, _ = QFileDialog.getOpenFileName(self, 'Open CSV', '', 'CSV Files (*.csv)', options=options)
 
+        if not file_name:
+            QMessageBox.critical(None, "Error", f"No files is opened", QMessageBox.Ok)
+            return
         self.signal_is_mixed = False
         self.frequency_slider.setValue(125)
-        self.SNR_slider.setValue(10)
 
         self.signal_data = pd.read_csv(file_name).values.transpose()[1][:1000]
         self.signal = Signal(self.signal_data)
-        self.signal.SNR = self.SNR_slider.value()
+        self.signal.SNR = 50
         self.signal.resampling_freq = self.frequency_slider.value()
 
         self.plot_widget1.clear()
@@ -225,7 +227,6 @@ class MainApp(QMainWindow, ui):
             else:
                 self.plot_mixer_widget.clear()
                 self.mixed_signal = Composer(self.composed_signals_list)
-                self.mixed_signal.SNR = 10
                 self.mixed_signal.resampling_freq = self.frequency_slider.value()
                 self.plot_mixer_widget.addItem(self.mixed_signal.signal_plot)
         else:
@@ -236,9 +237,9 @@ class MainApp(QMainWindow, ui):
         self.signal_is_mixed = True
         self.Fmax_for_mixed_signal = int((np.max(np.asarray(self.composed_signals_list).transpose()[0])))
         self.frequency_slider.setValue(2 * self.Fmax_for_mixed_signal)
-        self.SNR_slider.setValue(10)
 
-        self.mixed_signal.SNR = 10
+        self.mixed_signal.SNR = 50
+
         self.mixed_signal.sampling_freq = int(self.frequency_slider.value())
         self.mixed_signal.resampling_freq = int(self.frequency_slider.value())
 
@@ -254,10 +255,11 @@ class MainApp(QMainWindow, ui):
     def toggle_actual_normalized_frequency(self, checked):
         if checked:  # actual
             self.Fmax_label.setText("Hz")
-            self.frequency_slider.setMaximum(250)
             if self.signal and not self.signal_is_mixed:
+                self.frequency_slider.setMaximum(250)
                 self.frequency_slider.setValue(125)
             elif self.signal_is_mixed:
+                self.frequency_slider.setMaximum(self.Fmax_for_mixed_signal * 4)
                 self.frequency_slider.setValue(self.Fmax_for_mixed_signal * 2)
             if self.signal_is_mixed:
                 self.mixed_signal.SNR = self.SNR_slider.value()
@@ -265,7 +267,7 @@ class MainApp(QMainWindow, ui):
                 self.signal.SNR = self.SNR_slider.value()
         else:
             self.Fmax_label.setText("Fmax")
-            self.frequency_slider.setMaximum(10)
+            self.frequency_slider.setMaximum(4)
             if self.signal or self.signal_is_mixed:
                 self.frequency_slider.setValue(2)
             if self.signal_is_mixed:
@@ -279,14 +281,16 @@ class MainApp(QMainWindow, ui):
             self.SNR_label.setDisabled(False)
             self.SNR_value_label.setDisabled(False)
             self.dB_label.setDisabled(False)
+            self.SNR_slider.setValue(50)
+
         else:
             self.SNR_slider.setDisabled(True)
             self.SNR_label.setDisabled(True)
             self.SNR_value_label.setDisabled(True)
             self.dB_label.setDisabled(True)
             # when slider disabled set value 0
-            self.SNR_slider.setValue(10)
-            self.signal.SNR = 10
+            self.SNR_slider.setValue(50)
+
 
     def change_samples_according_to_frequency(self):
 

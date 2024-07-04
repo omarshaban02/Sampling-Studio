@@ -131,7 +131,6 @@ class AbstractSignal(object):
         recovered_signal = list(map(sinc, linspace))
         return recovered_signal
 
-
 class Signal(AbstractSignal):
     def __init__(self, data: np.ndarray):
         super().__init__()
